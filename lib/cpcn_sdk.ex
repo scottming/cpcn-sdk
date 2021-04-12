@@ -41,12 +41,9 @@ defmodule CPCNSdk do
           raise "algorithm error."
       end
 
+    File.rm(key_name)
+
     b |> Base.encode16(case: :lower)
   end
-
-  def encode() do
-  end
-
-  def decode() do
-  end
 end
+
