@@ -25,3 +25,6 @@ cpcn_sdk-*.tar
 
 # Temporary files for e.g. tests
 /tmp
+
+message.txt
+keyfile
