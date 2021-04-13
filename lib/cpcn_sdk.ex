@@ -102,6 +102,6 @@ defmodule CPCNSdk do
   end
 
   def config() do
-    Application.get_all_env(:cpcn)
+    Application.get_all_env(:cpcn_sdk)
   end
 end
