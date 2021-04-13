@@ -1,11 +1,11 @@
-defmodule CPCNSdk.MixProject do
+defmodule Dummy.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :cpcn_sdk,
+      app: :dummy,
       version: "0.1.0",
-      elixir: "~> 1.11",
+      elixir: "~> 1.12-rc",
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
@@ -15,7 +15,7 @@ defmodule CPCNSdk.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {CPCNSdk.Application, []}
+      mod: {Dummy.Application, []}
     ]
   end
 
@@ -24,6 +24,8 @@ defmodule CPCNSdk.MixProject do
     [
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
+      {:exsync, "~> 0.2", only: :dev},
+      {:cpcn_sdk, "~> 0.1.0", path: "../../"}
     ]
   end
 end
