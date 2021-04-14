@@ -10,7 +10,7 @@ defmodule CPCNSdk.TxType do
   end
 
   def tx1112_str(opts \\ []) do
-    tx1112(opts) |> generate()
+    tx1112(opts) |> document() |> generate()
   end
 
   @tx1112_keys ~w(InstitutionID PaymentNo Amount PayerID PayerName SplitType SettlementFlag Usage Remark Note NotificationURL)a
