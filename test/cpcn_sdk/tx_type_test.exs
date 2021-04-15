@@ -60,4 +60,3 @@ defmodule CPCNSdk.TxTypeTest do
     end
   end
 end
-

@@ -95,4 +95,3 @@ defmodule CPCNSdk do
     Application.get_all_env(:cpcn_sdk)
   end
 end
-

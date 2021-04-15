@@ -56,4 +56,3 @@ defmodule CPCNSdk.TxType do
     end
   end
 end
-
