@@ -15,13 +15,8 @@ defmodule CPCNSdk do
     # save private_key and message to file
     key_path = "keyfile"
     message_path = "message.txt"
-    {:ok, key_file} = File.open(key_path, [:write])
-    {:ok, message_file} = File.open(message_path, [:write])
-
-    IO.binwrite(key_file, private_key)
-    IO.binwrite(message_file, message)
-    File.close(key_file)
-    File.close(message_file)
+    :ok = File.write(key_path, private_key, [:write])
+    :ok = File.write(message_path, message, [:write])
 
     {b, _} =
       case algorithm do
@@ -34,25 +29,20 @@ defmodule CPCNSdk do
 
     File.rm(key_path)
 
-    b |> Base.encode16(case: :lower)
+    b |> Base.encode16()
   end
 
   def verify?(message, signature) do
     public_key_path = config()[:public_key_path]
-    decoded_signature = Base.decode16!(signature, case: :lower)
+    decoded_signature = Base.decode16!(signature)
     verify?(message, decoded_signature, public_key_path, algorithm())
   end
 
   def verify?(message, signature, public_key_path, algorithm) do
     signature_path = "signature"
     message_path = "message.txt"
-    {:ok, signature_file} = File.open(signature_path, [:write])
-    {:ok, message_file} = File.open(message_path, [:write])
-
-    IO.binwrite(signature_file, signature)
-    IO.binwrite(message_file, message)
-    File.close(signature_file)
-    File.close(message_file)
+    :ok = File.write(signature_path, signature, [:write])
+    :ok = File.write(message_path, message, [:write])
 
     {result, _} =
       case algorithm do
@@ -105,3 +95,4 @@ defmodule CPCNSdk do
     Application.get_all_env(:cpcn_sdk)
   end
 end
+
