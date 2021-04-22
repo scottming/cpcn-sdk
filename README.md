@@ -10,7 +10,7 @@ by adding `cpcn_sdk` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:cpcn_sdk, "~> 0.1.0", github: "scottming/cpcn_sdk"}
+    {:cpcn_sdk, "~> 0.1.0", github: "scottming/cpcn-sdk"}
   ]
 end
 ```
