@@ -13,6 +13,23 @@ defmodule CPCNSdk.TxType do
     tx1112(opts) |> document() |> generate()
   end
 
+  def tx1120_str(opts) do
+    tx1120(opts) |> document() |> generate()
+  end
+
+  defp tx1120(opts) do
+    head = element(:Head, nil, [element(:TxCode, nil, 1120)])
+
+    body =
+      element(:Body, nil, [
+        element(:InstitutionID, nil, opts[:InstitutionID]),
+        element(:PaymentNo, nil, opts[:PaymentNo]),
+        empty_element_or(:SourceTxTime, opts)
+      ])
+
+    element(:Request, %{version: 2.0}, [head, body])
+  end
+
   @tx1112_keys ~w(InstitutionID PaymentNo Amount PayerID PayerName SplitType SettlementFlag Usage Remark Note NotificationURL)a
   def tx1112(opts) when is_list(opts) and opts != [] do
     supported = Map.new(@tx1112_keys, fn x -> {x, true} end)
@@ -56,3 +73,4 @@ defmodule CPCNSdk.TxType do
     end
   end
 end
+
