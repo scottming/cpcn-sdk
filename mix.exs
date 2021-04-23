@@ -6,7 +6,7 @@ defmodule CPCNSdk.MixProject do
   def project do
     [
       app: :cpcn_sdk,
-      version: "0.1.1",
+      version: "0.1.2",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
       description: "A sdk for CPCN payment.",
