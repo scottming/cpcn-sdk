@@ -3,28 +3,28 @@ defmodule CPCNSdk do
   Documentation for `CPCNSdk`.
   """
 
-  def sign(message) do
+  def sign(xml_message) do
     private_key_path = config()[:private_key_path] || raise "Please config private_key_path"
     pass = config()[:pass] || raise "Please config pass"
     private_key = private_key_path |> decode_private_key_from(pass)
 
-    sign(message, private_key, algorithm())
+    sign(xml_message, private_key, algorithm())
   end
 
-  def sign(message, private_key, algorithm) do
-    # save private_key and message to file
+  def sign(xml_message, private_key, algorithm) do
+    # save private_key and xml_message to file
     key_path = "keyfile"
-    message_path = "message.txt"
+    xml_message_path = "message.txt"
     :ok = File.write(key_path, private_key, [:write])
-    :ok = File.write(message_path, message, [:write])
+    :ok = File.write(xml_message_path, xml_message, [:write])
 
     {b, _} =
       case algorithm do
         :sha256 ->
-          System.cmd("openssl", ["dgst", "-sha256", "-sign", key_path, message_path])
+          System.cmd("openssl", ["dgst", "-sha256", "-sign", key_path, xml_message_path])
 
         _ ->
-          System.cmd("openssl", ["dgst", "-sha1", "-sign", key_path, message_path])
+          System.cmd("openssl", ["dgst", "-sha1", "-sign", key_path, xml_message_path])
       end
 
     File.rm(key_path)
@@ -32,17 +32,17 @@ defmodule CPCNSdk do
     b |> Base.encode16()
   end
 
-  def verify?(message, signature) do
+  def verify?(xml_message, signature) do
     public_key_path = config()[:public_key_path]
     decoded_signature = Base.decode16!(signature)
-    verify?(message, decoded_signature, public_key_path, algorithm())
+    verify?(xml_message, decoded_signature, public_key_path, algorithm())
   end
 
-  def verify?(message, signature, public_key_path, algorithm) do
+  def verify?(xml_message, signature, public_key_path, algorithm) do
     signature_path = "signature"
-    message_path = "message.txt"
+    xml_message_path = "message.txt"
     :ok = File.write(signature_path, signature, [:write])
-    :ok = File.write(message_path, message, [:write])
+    :ok = File.write(xml_message_path, xml_message, [:write])
 
     {result, _} =
       case algorithm do
@@ -54,7 +54,7 @@ defmodule CPCNSdk do
             public_key_path,
             "-signature",
             signature_path,
-            message_path
+            xml_message_path
           ])
 
         _ ->
@@ -65,7 +65,7 @@ defmodule CPCNSdk do
             public_key_path,
             "-signature",
             signature_path,
-            message_path
+            xml_message_path
           ])
       end
 
